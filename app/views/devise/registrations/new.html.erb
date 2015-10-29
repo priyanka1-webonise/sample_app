@@ -1,0 +1,56 @@
+<div class="formHolder">
+    <h2>Sign up</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+
+      <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up" %>
+      </div>
+    <% end %>
+
+    <%= render "devise/shared/links" %>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var user_name = new LiveValidation('user_name', {onlyOnSubmit: true } );
+        user_name.add( Validate.Presence,{failureMessage: "Please add name"});
+        user_name.add(Validate.Length, {maximum: 45});
+
+
+        var user_email = new LiveValidation('user_email', {onlyOnSubmit: true } );
+        user_email.add( Validate.Presence,{failureMessage: "Please add email"});
+        user_email.add( Validate.Email,{failureMessage: "Please add valid email"});
+
+        var user_password = new LiveValidation('user_password', {onlyOnSubmit: true } );
+        user_password.add( Validate.Presence,{failureMessage: "Please add password"});
+        user_password.add(Validate.Length, {minimum: 8, maximum: 25});
+
+
+        var user_password_confirmation = new LiveValidation('user_password_confirmation', {onlyOnSubmit: true } );
+        user_password_confirmation.add( Validate.Presence,{failureMessage: "Please add password confirmation"});
+    });
+</script>
