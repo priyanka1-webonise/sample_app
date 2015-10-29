@@ -41,12 +41,4 @@ Things you may want to cover:
     email - user@example.com
     password - password
 
-* Database creation
-
-   database configuration are mention in database.yml file
-   please follow the following steps to setup databse
-   1) use rake db:create to create a database
-   2) rake db:migrate to run migrations
-   3) rake db:seed to dump data
-
 
