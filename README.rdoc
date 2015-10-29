@@ -13,9 +13,33 @@ Things you may want to cover:
 
   Rails 4.2.3
 
-* System dependencies
+* Databse used
 
-* Configuration
+  Mysql 
+
+* Steps to follow to set up application in development mode
+  
+    bundle install # to install require gems
+    
+    rake db:create # create a database
+    
+    rake db:migrate # add all tables to databae
+    
+    rake db: seed # populate test data
+    
+* URL and test credentials
+
+    Admin side
+    BASE_URL/admin
+    # credentials that we have populated in seed.rb
+    email - admin@example.com
+    password - password
+    
+    User side
+    BASE_URL
+    # credentials that we have populated in seed.rb
+    email - user@example.com
+    password - password
 
 * Database creation
 
