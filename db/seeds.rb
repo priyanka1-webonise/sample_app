@@ -3,4 +3,6 @@
 #
 # Examples:
 #
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+AdminUser.create(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+User.create(name: 'test_user', email: 'user@example.com'  password: 'password', password_confirmation: 'password')
+Post.create(title: 'test description', description: 'test description')
