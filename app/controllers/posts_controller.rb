@@ -1,12 +1,18 @@
 class PostsController < ApplicationController
-  before_filter :find_post, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
+  before_action :find_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = Post.all
+    @posts = current_user.posts
   end
 
   def show
+    unless @post.present?
+      respond_to do |format|
+        format.html { redirect_to posts_path, notice: 'Bad request.'}
+        format.json { render status: 400 }
+      end
+    end
   end
 
   def new
@@ -14,6 +20,12 @@ class PostsController < ApplicationController
   end
 
   def edit
+    unless @post.present?
+      respond_to do |format|
+        format.html { redirect_to posts_path, notice: 'Bad request.'}
+        format.json { render status: 400 }
+      end
+    end
   end
 
   def create
@@ -43,19 +55,30 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post.destroy
-    respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-      format.json { head :no_content }
+    if @post.present?
+      @post.destroy
+      respond_to do |format|
+        format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to posts_path, notice: 'Bad request.'}
+        format.json { rendr status: 400 }
+      end
     end
   end
 
   private
     def find_post
-      @post = Post.find(params[:id])
+      begin
+        @post = current_user.posts.find(params[:id])
+      rescue ActiveRecord::RecordNotFound => e
+        @post = nil
+      end
     end
 
     def post_params
-      params.require(:post).permit(:title, :description)
+      params.require(:post).permit(:title, :description).merge(user_id: current_user.id)
     end
 end
