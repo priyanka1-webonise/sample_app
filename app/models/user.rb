@@ -15,4 +15,6 @@ class User < ActiveRecord::Base
             message: 'Please enter a valid email address' }
   validates :password, presence: { message: 'Please enter password' }
   validates :password_confirmation, presence: { message: 'Please re-enter password' }
+  
+  has_many :posts
 end
