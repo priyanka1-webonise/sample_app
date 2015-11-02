@@ -71,11 +71,7 @@ class PostsController < ApplicationController
 
   private
     def find_post
-      begin
-        @post = current_user.posts.find(params[:id])
-      rescue ActiveRecord::RecordNotFound => e
-        @post = nil
-      end
+      @post = current_user.posts.find_by(id: params[:id])
     end
 
     def post_params
